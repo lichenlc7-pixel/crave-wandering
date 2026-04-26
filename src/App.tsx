@@ -110,12 +110,12 @@ export default function App() {
 
   // Level 1 Node Positions
   const nodePositions = useMemo(() => {
-    const radiusX = 145; 
-    const radiusY = 220; 
+    const radiusX = 135; 
+    const radiusY = 240; 
     return state.neighbors.map((_, i) => {
       const angle = (i / state.neighbors.length) * Math.PI * 2 - Math.PI / 2;
       return {
-        x: Math.cos(angle) * (radiusX + (i % 2 === 0 ? 20 : -10)),
+        x: Math.cos(angle) * (radiusX + (i % 2 === 0 ? 15 : -10)),
         y: Math.sin(angle) * (radiusY + (i % 2 === 0 ? 15 : -15)),
       };
     });
@@ -165,10 +165,10 @@ export default function App() {
       <AnimatePresence mode="wait">
         <motion.div
            key={state.level === MapLevel.EXPLORATION ? 'explore' : state.level === MapLevel.DEEP_DIVE ? 'deepdive' : 'pivot'}
-           initial={{ opacity: 0, y: state.level === MapLevel.EXPLORATION ? -20 : 0 }}
-           animate={{ opacity: 1, y: 0 }}
-           exit={{ opacity: 0, y: state.level === MapLevel.EXPLORATION ? -20 : 0 }}
-           transition={{ duration: state.level === MapLevel.EXPLORATION ? 0.3 : 0.4 }}
+           initial={{ opacity: 0 }}
+           animate={{ opacity: 1 }}
+           exit={{ opacity: 0 }}
+           transition={{ duration: 0.4, delay: state.level === MapLevel.EXPLORATION ? 0 : 0.3 }}
            className="absolute top-14 w-full z-40 text-center pointer-events-none"
         >
           <h1 className="text-[26px] font-medium text-black/80 tracking-tight">
@@ -206,7 +206,7 @@ export default function App() {
               className="z-40 flex flex-col items-center gap-2 cursor-pointer group"
               onClick={() => handleNodeClick(state.centerDish)}
             >
-              <div className="w-20 h-20 rounded-full glass-node p-1 shadow-md group-hover:bg-white/40 transition-all duration-300">
+              <div className="w-32 h-32 rounded-full glass-node p-1.5 shadow-lg group-hover:bg-white/40 transition-all duration-300">
                  <div className="w-full h-full rounded-full overflow-hidden ring-1 ring-black/5">
                   <img 
                     src={state.centerDish.imageUrl} 
@@ -226,14 +226,14 @@ export default function App() {
               key={`${state.centerDish.id}-${neighbor.id}`}
               layoutId={`food-${neighbor.id}`}
               className="absolute cursor-pointer flex flex-col items-center gap-2 group z-20"
-              style={{ left: '50%', top: '50%', marginLeft: -40, marginTop: -50 }}
+              style={{ left: '50%', top: '50%', marginLeft: -56, marginTop: -56 }}
               initial={{ opacity: 0, scale: 0.5 }}
               animate={{ opacity: 1, scale: 1, x: nodePositions[idx].x, y: nodePositions[idx].y }}
               exit={{ opacity: 0, scale: 0 }}
               transition={{ delay: idx * 0.05, type: 'spring', stiffness: 60, damping: 22 }}
               onClick={() => handleNodeClick(neighbor)}
             >
-              <div className="w-20 h-20 rounded-full glass-node p-1 shadow-md group-hover:bg-white/40 transition-all duration-300">
+              <div className="w-28 h-28 rounded-full glass-node p-1.5 shadow-md group-hover:bg-white/40 transition-all duration-300">
                  <div className="w-full h-full rounded-full overflow-hidden ring-1 ring-black/5">
                   <img src={neighbor.imageUrl} alt={neighbor.name} className="w-full h-full object-cover opacity-90 group-hover:opacity-100" referrerPolicy="no-referrer" />
                  </div>
@@ -246,16 +246,18 @@ export default function App() {
         <div className="relative w-full h-full flex flex-col items-center pt-[150px] px-6 overflow-y-auto overflow-x-hidden pb-24 touch-pan-y">
           {/* Level 2 Deep Dive Layout */}
           
-          {/* Ingredients (Left Side) */}
-          <div className="absolute left-3 top-[160px] flex flex-col items-center gap-4 z-30 w-[72px]">
+          {/* Ingredients Container (Left Side) */}
+          <motion.div 
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.4, delay: 0.45 }}
+            className="absolute left-3 top-[160px] flex flex-col items-center gap-4 z-30 w-[72px]"
+          >
             <h4 className="text-[14px] font-medium text-black/60 tracking-[0.1em] mb-1">食材</h4>
             <div className="flex flex-col gap-5 w-full items-center">
-              {state.centerDish.metadata?.ingredients?.slice(0, 4).map((ing, i) => (
-                <motion.div
+              {state.centerDish.metadata?.ingredients?.slice(0, 4).map((ing) => (
+                <div
                   key={ing}
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  transition={{ duration: 0.4 }}
                   className="flex flex-col items-center gap-1.5 cursor-pointer group"
                   onClick={() => handleIngredientClick(ing)}
                 >
@@ -265,21 +267,23 @@ export default function App() {
                      </div>
                   </div>
                   <span className="text-[12px] text-black/60 font-light tracking-wide group-hover:text-black/80">{ing}</span>
-                </motion.div>
+                </div>
               ))}
             </div>
-          </div>
+          </motion.div>
 
-          {/* Flavors (Right Side) */}
-          <div className="absolute right-3 top-[160px] flex flex-col items-center gap-4 z-30 w-[72px]">
+          {/* Flavors Container (Right Side) */}
+          <motion.div 
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.4, delay: 0.45 }}
+            className="absolute right-3 top-[160px] flex flex-col items-center gap-4 z-30 w-[72px]"
+          >
             <h4 className="text-[14px] font-medium text-black/60 tracking-[0.1em] mb-1">口味</h4>
             <div className="flex flex-col gap-5 w-full items-center">
-              {state.centerDish.metadata?.flavors?.slice(0, 4).map((flv, i) => (
-                <motion.div
+              {state.centerDish.metadata?.flavors?.slice(0, 4).map((flv) => (
+                <div
                   key={flv}
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  transition={{ duration: 0.4 }}
                   className="flex flex-col items-center gap-1.5"
                 >
                   <div className="w-10 h-10 rounded-full glass-node flex items-center justify-center p-1 shadow-sm border-white/60">
@@ -288,10 +292,10 @@ export default function App() {
                      </div>
                   </div>
                   <span className="text-[12px] text-black/60 font-light tracking-wide">{flv}</span>
-                </motion.div>
+                </div>
               ))}
             </div>
-          </div>
+          </motion.div>
 
           {/* Center Main Dish Visual */}
           <motion.div
@@ -311,7 +315,7 @@ export default function App() {
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
-              transition={{ duration: 0.4 }}
+              transition={{ duration: 0.4, delay: 0.45 }}
               className="px-3 py-2 glass-node rounded-full text-[11px] font-medium text-black/60 border-white/50 shadow-sm"
             >
               {state.centerDish.category}
@@ -321,7 +325,7 @@ export default function App() {
                 key={scene}
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
-                transition={{ duration: 0.4 }}
+                transition={{ duration: 0.4, delay: 0.45 }}
                 className="px-3 py-2 glass-node rounded-full text-[11px] font-medium text-black/60 border-white/50 shadow-sm"
               >
                 {scene}
@@ -338,7 +342,7 @@ export default function App() {
                     key={item.name}
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
-                    transition={{ duration: 0.4 }}
+                    transition={{ duration: 0.4, delay: 0.45 }}
                     className="flex flex-col items-center gap-1.5 w-[70px]"
                   >
                     <div className="w-14 h-14 rounded-2xl glass-node p-0.5 shadow-sm border-white/60 overflow-hidden group active:scale-95 transition-transform">
@@ -361,7 +365,7 @@ export default function App() {
                  <motion.div 
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
-                    transition={{ duration: 0.4 }}
+                    transition={{ duration: 0.4, delay: 0.45 }}
                     className="w-full max-w-[320px] bg-white/40 rounded-2xl p-3 shadow-sm border border-white/60 flex items-center gap-3 active:scale-95 transition-transform cursor-pointer"
                  >
                    <div className="w-12 h-12 rounded-xl overflow-hidden shrink-0">
