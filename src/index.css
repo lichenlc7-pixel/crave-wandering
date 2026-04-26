@@ -30,7 +30,7 @@
 }
 
 .glass-node {
-  @apply backdrop-blur-[32px] bg-white/10 border border-white/40 shadow-[0_4px_12px_rgba(0,0,0,0.03)];
+  @apply backdrop-blur-[32px] bg-white/15 border border-white/40 shadow-[0_4px_12px_rgba(0,0,0,0.03)];
 }
 
 .glass-panel {

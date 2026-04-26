@@ -6,7 +6,7 @@
 import { useState, useCallback, useMemo, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { ChevronLeft, Info, ChefHat } from 'lucide-react';
-import { ALL_FOODS, INITIAL_CENTER, getNeighbors, getDishesByIngredient } from './constants';
+import { ALL_FOODS, INITIAL_CENTER, getNeighbors, getDishesByIngredient, INGREDIENT_IMAGES, FLAVOR_IMAGES } from './constants';
 import { FoodItem, MapState, MapLevel } from './types';
 
 export default function App() {
@@ -110,13 +110,13 @@ export default function App() {
 
   // Level 1 Node Positions
   const nodePositions = useMemo(() => {
-    const radiusX = 135; 
-    const radiusY = 240; 
+    const radiusX = 125; 
+    const radiusY = 230; 
     return state.neighbors.map((_, i) => {
       const angle = (i / state.neighbors.length) * Math.PI * 2 - Math.PI / 2;
       return {
-        x: Math.cos(angle) * (radiusX + (i % 2 === 0 ? 15 : -10)),
-        y: Math.sin(angle) * (radiusY + (i % 2 === 0 ? 15 : -15)),
+        x: Math.cos(angle) * radiusX,
+        y: Math.sin(angle) * radiusY,
       };
     });
   }, [state.neighbors.length]);
@@ -169,7 +169,7 @@ export default function App() {
            animate={{ opacity: 1 }}
            exit={{ opacity: 0 }}
            transition={{ duration: 0.4, delay: state.level === MapLevel.EXPLORATION ? 0 : 0.3 }}
-           className="absolute top-14 w-full z-40 text-center pointer-events-none"
+           className="absolute top-8 w-full z-40 text-center pointer-events-none"
         >
           <h1 className="text-[26px] font-medium text-black/80 tracking-tight">
              {state.level === MapLevel.EXPLORATION 
@@ -196,17 +196,17 @@ export default function App() {
 
       {state.level === MapLevel.EXPLORATION ? (
         <motion.div 
-          className="relative w-full h-full flex items-center justify-center"
-          animate={{ x: mousePos.x * -0.2, y: mousePos.y * -0.2 }}
+          className="relative w-full h-full flex items-center justify-center pt-8"
+          animate={{ x: mousePos.x * -0.1, y: mousePos.y * -0.1 }}
         >
           {/* Center Dish */}
           <AnimatePresence mode="wait">
             <motion.div
-              layoutId={`food-${state.centerDish.id}`}
-              className="z-40 flex flex-col items-center gap-2 cursor-pointer group"
+              key={state.centerDish.id}
+              className="z-40 flex flex-col items-center gap-2 cursor-pointer group relative"
               onClick={() => handleNodeClick(state.centerDish)}
             >
-              <div className="w-32 h-32 rounded-full glass-node p-1.5 shadow-lg group-hover:bg-white/40 transition-all duration-300">
+              <div className="w-28 h-28 rounded-full glass-node p-1.5 shadow-lg group-hover:bg-white/30 transition-colors duration-300">
                  <div className="w-full h-full rounded-full overflow-hidden ring-1 ring-black/5">
                   <img 
                     src={state.centerDish.imageUrl} 
@@ -216,7 +216,7 @@ export default function App() {
                   />
                  </div>
               </div>
-              <span className="text-[12px] font-light text-black/60 tracking-tight text-center max-w-[75px] truncate">{state.centerDish.name}</span>
+              <span className="text-[12px] font-light text-black/60 tracking-tight text-center max-w-[85px] truncate">{state.centerDish.name}</span>
             </motion.div>
           </AnimatePresence>
 
@@ -224,21 +224,20 @@ export default function App() {
           {state.neighbors.map((neighbor, idx) => (
             <motion.div
               key={`${state.centerDish.id}-${neighbor.id}`}
-              layoutId={`food-${neighbor.id}`}
               className="absolute cursor-pointer flex flex-col items-center gap-2 group z-20"
-              style={{ left: '50%', top: '50%', marginLeft: -56, marginTop: -56 }}
+              style={{ left: '50%', top: '50%', marginLeft: -48, marginTop: -48 }}
               initial={{ opacity: 0, scale: 0.5 }}
               animate={{ opacity: 1, scale: 1, x: nodePositions[idx].x, y: nodePositions[idx].y }}
               exit={{ opacity: 0, scale: 0 }}
               transition={{ delay: idx * 0.05, type: 'spring', stiffness: 60, damping: 22 }}
               onClick={() => handleNodeClick(neighbor)}
             >
-              <div className="w-28 h-28 rounded-full glass-node p-1.5 shadow-md group-hover:bg-white/40 transition-all duration-300">
+              <div className="w-24 h-24 rounded-full glass-node p-1.5 shadow-md group-hover:bg-white/30 transition-colors duration-300">
                  <div className="w-full h-full rounded-full overflow-hidden ring-1 ring-black/5">
                   <img src={neighbor.imageUrl} alt={neighbor.name} className="w-full h-full object-cover opacity-90 group-hover:opacity-100" referrerPolicy="no-referrer" />
                  </div>
               </div>
-              <span className="text-[12px] font-light text-black/60 tracking-tight text-center max-w-[75px] truncate px-1 group-hover:text-black/80">{neighbor.name}</span>
+              <span className="text-[12px] font-light text-black/60 tracking-tight text-center max-w-[85px] truncate px-1 group-hover:text-black/80">{neighbor.name}</span>
             </motion.div>
           ))}
         </motion.div>
@@ -261,9 +260,15 @@ export default function App() {
                   className="flex flex-col items-center gap-1.5 cursor-pointer group"
                   onClick={() => handleIngredientClick(ing)}
                 >
-                  <div className="w-10 h-10 rounded-full glass-node flex items-center justify-center p-1 shadow-sm border-white/60 group-hover:bg-white/50 transition-colors">
-                     <div className="w-full h-full rounded-full bg-black/[0.02] flex items-center justify-center">
-                       <span className="text-[8px] text-black/70 font-semibold text-center px-1 leading-[1.1]">{ing}</span>
+                  <div className="w-10 h-10 rounded-full glass-node !border-none flex items-center justify-center p-0.5 shadow-sm group-hover:bg-white/50 transition-colors">
+                     <div className="w-full h-full rounded-full overflow-hidden flex items-center justify-center">
+                       {INGREDIENT_IMAGES[ing] ? (
+                         <img src={INGREDIENT_IMAGES[ing]} alt={ing} className="w-full h-full object-cover" referrerPolicy="no-referrer" />
+                       ) : (
+                         <div className="w-full h-full bg-black/[0.05] flex items-center justify-center">
+                           <span className="text-[8px] text-black/70 font-semibold text-center px-1 leading-[1.1]">{ing}</span>
+                         </div>
+                       )}
                      </div>
                   </div>
                   <span className="text-[12px] text-black/60 font-light tracking-wide group-hover:text-black/80">{ing}</span>
@@ -286,9 +291,15 @@ export default function App() {
                   key={flv}
                   className="flex flex-col items-center gap-1.5"
                 >
-                  <div className="w-10 h-10 rounded-full glass-node flex items-center justify-center p-1 shadow-sm border-white/60">
-                     <div className="w-full h-full rounded-full bg-orange-500/[0.04] flex items-center justify-center">
-                       <span className="text-[8px] text-black/70 font-semibold text-center px-1 leading-[1.1]">{flv}</span>
+                  <div className="w-10 h-10 rounded-full glass-node !border-none flex items-center justify-center p-0.5 shadow-sm">
+                     <div className="w-full h-full rounded-full overflow-hidden flex items-center justify-center">
+                       {FLAVOR_IMAGES[flv] ? (
+                         <img src={FLAVOR_IMAGES[flv]} alt={flv} className="w-full h-full object-cover" referrerPolicy="no-referrer" />
+                       ) : (
+                         <div className="w-full h-full rounded-full bg-orange-500/[0.08] flex items-center justify-center">
+                           <span className="text-[8px] text-black/70 font-semibold text-center px-1 leading-[1.1]">{flv}</span>
+                         </div>
+                       )}
                      </div>
                   </div>
                   <span className="text-[12px] text-black/60 font-light tracking-wide">{flv}</span>

@@ -5,15 +5,15 @@ export const ALL_FOODS: FoodItem[] = [
     id: '1', 
     name: '黑森林蛋糕', 
     category: '甜品', 
-    imageUrl: 'https://i.imgur.com/OJpDO42.jpeg',
+    imageUrl: 'https://i.imgur.com/vr5xvEj.png',
     metadata: {
-      ingredients: ['巧克力蛋糕', '樱桃'],
+      ingredients: ['巧克力蛋糕'],
       flavors: ['绵密', '可可味'],
       relatedDishes: [
-        { name: '提拉米苏', imageUrl: 'https://images.unsplash.com/photo-1571877227200-a0d98ea607e9?q=80&w=200' },
-        { name: '牛角包', imageUrl: 'https://images.unsplash.com/photo-1555507036-ab1f4038808a?q=80&w=200' },
-        { name: '千层蛋糕', imageUrl: 'https://images.unsplash.com/photo-1550617931-e17a7b70dce2?q=80&w=200' },
-        { name: '红丝绒蛋糕', imageUrl: 'https://images.unsplash.com/photo-1586788680434-30d324b2d46f?q=80&w=200' }
+        { name: '提拉米苏', imageUrl: 'https://i.imgur.com/HKtSDdO.jpeg' },
+        { name: '牛角包', imageUrl: 'https://i.imgur.com/iC7wvlv.png' },
+        { name: '千层蛋糕', imageUrl: 'https://i.imgur.com/kabppvt.png' },
+        { name: '红丝绒蛋糕', imageUrl: 'https://i.imgur.com/gjXSl38.png' }
       ],
       scenes: ['西式甜品', '下午茶', '补充热量']
     }
@@ -22,15 +22,15 @@ export const ALL_FOODS: FoodItem[] = [
     id: '2', 
     name: '橙C美式', 
     category: '咖啡', 
-    imageUrl: 'https://i.imgur.com/N1ZGKcO.png',
+    imageUrl: 'https://i.imgur.com/7KMQ38u.png',
     metadata: {
       ingredients: ['咖啡', '橙汁'],
       flavors: ['果酸', '微苦'],
       relatedDishes: [
-        { name: '生椰拿铁', imageUrl: 'https://images.unsplash.com/photo-1594132223112-7bfbeaa056c5?q=80&w=200' },
-        { name: '茉莉美式', imageUrl: 'https://images.unsplash.com/photo-1559496417-e7f25cb247f3?q=80&w=200' },
-        { name: '西柚气泡水', imageUrl: 'https://images.unsplash.com/photo-1513558161293-cdaf765ed2fd?q=80&w=200' },
-        { name: '气泡美式', imageUrl: 'https://images.unsplash.com/photo-1541167760496-162955ed2a95?q=80&w=200' }
+        { name: '生椰拿铁', imageUrl: 'https://i.imgur.com/tlpQmcu.png' },
+        { name: '茉莉美式', imageUrl: 'https://i.imgur.com/HX7ob2E.png' },
+        { name: '西柚气泡水', imageUrl: 'https://i.imgur.com/oMYAR74.png' },
+        { name: '气泡美式', imageUrl: 'https://i.imgur.com/uuMoWTs.png' }
       ],
       scenes: ['咖啡饮品', '提神醒脑']
     }
@@ -39,15 +39,15 @@ export const ALL_FOODS: FoodItem[] = [
     id: '3', 
     name: '油泼面', 
     category: '面食', 
-    imageUrl: 'https://i.imgur.com/YO3pceD.jpeg',
+    imageUrl: 'https://i.imgur.com/FSP5Z07.png',
     metadata: {
       ingredients: ['面条'],
       flavors: ['香辣', '蒜香'],
       relatedDishes: [
-        { name: '臊子面', imageUrl: 'https://images.unsplash.com/photo-1569718212165-3a8278d5f624?q=80&w=200' },
-        { name: '重庆小面', imageUrl: 'https://images.unsplash.com/photo-1621252119330-8d5930263f97?q=80&w=200' },
-        { name: '兰州拉面', imageUrl: 'https://images.unsplash.com/photo-1612929633738-8fe44f7ec841?q=80&w=200' },
-        { name: '牛肉面', imageUrl: 'https://images.unsplash.com/photo-1585032226651-759b368d7246?q=80&w=200' }
+        { name: '臊子面', imageUrl: 'https://i.imgur.com/PKMy7tP.png' },
+        { name: '重庆小面', imageUrl: 'https://i.imgur.com/14qa5vw.png' },
+        { name: '兰州拉面', imageUrl: 'https://i.imgur.com/AG3eIlN.png' },
+        { name: '牛肉面', imageUrl: 'https://i.imgur.com/19Q68y0.jpeg' }
       ],
       scenes: ['陕西面食', '碳水满足', '辣过瘾']
     }
@@ -56,15 +56,15 @@ export const ALL_FOODS: FoodItem[] = [
     id: '4', 
     name: '肉骨茶', 
     category: '汤类', 
-    imageUrl: 'https://i.imgur.com/SJw5xj5.jpeg',
+    imageUrl: 'https://i.imgur.com/Qh694Jh.png',
     metadata: {
       ingredients: ['猪排骨'],
       flavors: ['胡椒香', '鲜香'],
       relatedDishes: [
-        { name: '猪肚鸡', imageUrl: 'https://images.unsplash.com/photo-1649141013444-239611db189d?q=80&w=200' },
-        { name: '排骨汤', imageUrl: 'https://images.unsplash.com/photo-1547928576-a4a33237ce35?q=80&w=200' },
-        { name: '海南鸡饭', imageUrl: 'https://images.unsplash.com/photo-1512058564366-18510be2db19?q=80&w=200' },
-        { name: '冬阴功汤', imageUrl: 'https://images.unsplash.com/photo-1512058564366-18510be2db19?q=80&w=200' }
+        { name: '猪肚鸡', imageUrl: 'https://i.imgur.com/jUJFXvd.png' },
+        { name: '排骨汤', imageUrl: 'https://i.imgur.com/WKNriLA.png' },
+        { name: '海南鸡饭', imageUrl: 'https://i.imgur.com/gOjxDdp.png' },
+        { name: '冬阴功汤', imageUrl: 'https://i.imgur.com/afRfOtC.png' }
       ],
       scenes: ['新马风味', '适合降温吃', '暖胃']
     }
@@ -73,15 +73,15 @@ export const ALL_FOODS: FoodItem[] = [
     id: '5', 
     name: '紫苏牛蛙煲', 
     category: '热锅', 
-    imageUrl: 'https://i.imgur.com/u8aDxFp.jpeg',
+    imageUrl: 'https://i.imgur.com/KGUjZbN.png',
     metadata: {
       ingredients: ['牛蛙'],
       flavors: ['鲜嫩', '香辣'],
       relatedDishes: [
-        { name: '辣椒炒肉', imageUrl: 'https://images.unsplash.com/photo-1512058564366-18510be2db19?q=80&w=200' },
-        { name: '黄焖鸡米饭', imageUrl: 'https://images.unsplash.com/photo-1588166524941-3bf61a9c41db?q=80&w=200' },
-        { name: '干锅牛蛙', imageUrl: 'https://images.unsplash.com/photo-1544025162-d76694265947?q=80&w=200' },
-        { name: '香辣鸡煲', imageUrl: 'https://images.unsplash.com/photo-1544025162-d76694265947?q=80&w=200' }
+        { name: '辣椒炒肉', imageUrl: 'https://i.imgur.com/0O6eu8v.jpeg' },
+        { name: '黄焖鸡米饭', imageUrl: 'https://i.imgur.com/crrVOA5.png' },
+        { name: '干锅牛蛙', imageUrl: 'https://i.imgur.com/bcMcslg.jpeg' },
+        { name: '香辣鸡煲', imageUrl: 'https://i.imgur.com/eA1R9bF.png' }
       ],
       scenes: ['湘菜', '下饭', '补充热量']
     }
@@ -90,15 +90,15 @@ export const ALL_FOODS: FoodItem[] = [
     id: '6', 
     name: '羊肉泡馍', 
     category: '西北菜', 
-    imageUrl: 'https://i.imgur.com/evaM28p.jpeg',
+    imageUrl: 'https://i.imgur.com/ax3Hsaq.png',
     metadata: {
       ingredients: ['羊肉', '馍'],
       flavors: ['鲜香', '咸鲜'],
       relatedDishes: [
-        { name: '胡辣汤', imageUrl: 'https://images.unsplash.com/photo-1649141013444-239611db189d?q=80&w=200' },
-        { name: '羊杂汤', imageUrl: 'https://images.unsplash.com/photo-1649141013444-239611db189d?q=80&w=200' },
-        { name: '牛肉面', imageUrl: 'https://images.unsplash.com/photo-1612929633738-8fe44f7ec841?q=80&w=200' },
-        { name: '羊肉捞捞锅', imageUrl: 'https://images.unsplash.com/photo-1649141013444-239611db189d?q=80&w=200' }
+        { name: '胡辣汤', imageUrl: 'https://i.imgur.com/LtkaaDq.jpeg' },
+        { name: '羊杂汤', imageUrl: 'https://i.imgur.com/P3aIsPZ.jpeg' },
+        { name: '羊肉串', imageUrl: 'https://i.imgur.com/Aa7YwH3.png' },
+        { name: '葱爆羊肉', imageUrl: 'https://i.imgur.com/1STpy1G.jpeg' }
       ],
       scenes: ['陕西风味', '暖胃', '饱腹感强']
     }
@@ -107,15 +107,15 @@ export const ALL_FOODS: FoodItem[] = [
     id: '7', 
     name: '烤牛五花', 
     category: '烧烤', 
-    imageUrl: 'https://i.imgur.com/9ZbydS4.jpeg',
+    imageUrl: 'https://i.imgur.com/5lmuW4F.png',
     metadata: {
       ingredients: ['牛五花'],
       flavors: ['油脂香', '焦香'],
       relatedDishes: [
-        { name: '炸鸡', imageUrl: 'https://images.unsplash.com/photo-1562967914-6cbb241c2ad3?q=80&w=200' },
-        { name: '肥牛饭', imageUrl: 'https://images.unsplash.com/photo-1512058564366-18510be2db19?q=80&w=200' },
-        { name: '烤牛肋排', imageUrl: 'https://images.unsplash.com/photo-1544025162-d76694265947?q=80&w=200' },
-        { name: '牛肉串', imageUrl: 'https://images.unsplash.com/photo-1649141013444-239611db189d?q=80&w=200' }
+        { name: '炸鸡', imageUrl: 'https://i.imgur.com/dTaQIh1.jpeg' },
+        { name: '肥牛饭', imageUrl: 'https://i.imgur.com/8uKhaj1.png' },
+        { name: '烤牛肋排', imageUrl: 'https://i.imgur.com/QL4Dwvf.jpeg' },
+        { name: '辣椒炒肉', imageUrl: 'https://i.imgur.com/0O6eu8v.jpeg' }
       ],
       scenes: ['烤肉', '改善伙食', '补充热量']
     }
@@ -124,15 +124,15 @@ export const ALL_FOODS: FoodItem[] = [
     id: '8', 
     name: '三文鱼刺身', 
     category: '日料', 
-    imageUrl: 'https://i.imgur.com/LgY9b8t.jpeg',
+    imageUrl: 'https://i.imgur.com/6uZQkQy.png',
     metadata: {
       ingredients: ['三文鱼'],
       flavors: ['鲜甜', '油脂香'],
       relatedDishes: [
-        { name: '金枪鱼刺身', imageUrl: 'https://images.unsplash.com/photo-1534353473418-4cfa6c56fd38?q=80&w=200' },
-        { name: '海胆刺身', imageUrl: 'https://images.unsplash.com/photo-1534353473418-4cfa6c56fd38?q=80&w=200' },
-        { name: '三文鱼寿司', imageUrl: 'https://images.unsplash.com/photo-1579871494447-9811cf80d66c?q=80&w=200' },
-        { name: '日式海鲜饭', imageUrl: 'https://images.unsplash.com/photo-1581184953813-2007ce92e28b?q=80&w=200' }
+        { name: '金枪鱼刺身', imageUrl: 'https://i.imgur.com/TYqIhuX.png' },
+        { name: '海胆刺身', imageUrl: 'https://i.imgur.com/y6QLJfs.png' },
+        { name: '三文鱼寿司', imageUrl: 'https://i.imgur.com/DYkw8Ky.png' },
+        { name: '日式海鲜饭', imageUrl: 'https://i.imgur.com/snTUQXR.jpeg' }
       ],
       scenes: ['日料', '高蛋白', '优质热量']
     }
@@ -140,6 +140,35 @@ export const ALL_FOODS: FoodItem[] = [
 ];
 
 export const INITIAL_CENTER = ALL_FOODS[0]; // 黑森林蛋糕
+ 
+export const INGREDIENT_IMAGES: Record<string, string> = {
+  '猪排骨': 'https://i.imgur.com/iKzgwN3.png',
+  '橙汁': 'https://i.imgur.com/1y6yM5E.png',
+  '牛蛙': 'https://i.imgur.com/3nWztj2.png',
+  '面条': 'https://i.imgur.com/OeMC0WU.png',
+  '咖啡': 'https://i.imgur.com/cqgNmUd.png',
+  '三文鱼': 'https://i.imgur.com/uSvcRvQ.png',
+  '羊肉': 'https://i.imgur.com/C4tg0mt.png',
+  '牛五花': 'https://i.imgur.com/TK6BzfZ.png',
+  '巧克力蛋糕': 'https://i.imgur.com/ZdGsNCo.png',
+  '馍': 'https://i.imgur.com/gbAHi1E.png',
+};
+
+export const FLAVOR_IMAGES: Record<string, string> = {
+  '油脂香': 'https://i.imgur.com/zeyGcTM.png',
+  '鲜甜': 'https://i.imgur.com/yRHZKn9.png',
+  '焦香': 'https://i.imgur.com/XVm6Mup.jpeg',
+  '蒜香': 'https://i.imgur.com/4Dm9qtR.jpeg',
+  '胡椒香': 'https://i.imgur.com/Rcwr6qQ.jpeg',
+  '微苦': 'https://i.imgur.com/N6CndcQ.jpeg',
+  '香辣': 'https://i.imgur.com/cJObY0L.png',
+  '绵密': 'https://i.imgur.com/yqExSic.png',
+  '鲜嫩': 'https://i.imgur.com/IWMjJ2h.png',
+  '可可味': 'https://i.imgur.com/n2dYncS.png',
+  '咸鲜': 'https://i.imgur.com/HU9lGHv.png',
+  '果酸': 'https://i.imgur.com/Dg7fD09.png',
+  '鲜香': 'https://i.imgur.com/vSeALlF.png',
+};
 
 export const getNeighbors = (center: FoodItem): FoodItem[] => {
   // Logic to find neighbors: current category siblings + random others
