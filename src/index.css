@@ -1,0 +1,33 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", ui-sans-serif, system-ui;
+  --color-glass-base: rgba(255, 255, 255, 0.08);
+  --color-glass-border: rgba(255, 255, 255, 0.2);
+}
+
+@layer base {
+  body {
+    @apply antialiased bg-[#F2F2F2] overflow-hidden flex items-center justify-center h-screen;
+  }
+}
+
+.noise-bg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0.04;
+  pointer-events: none;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+  z-index: 10;
+}
+
+.glass-node {
+  @apply backdrop-blur-[32px] bg-white/10 border border-white/40 shadow-[0_4px_12px_rgba(0,0,0,0.03)];
+}
+
+.glass-panel {
+  @apply backdrop-blur-[40px] bg-white/20 border border-white/50 shadow-[0_8px_32px_rgba(0,0,0,0.06)];
+}
