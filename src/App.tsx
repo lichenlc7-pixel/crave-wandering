@@ -161,56 +161,39 @@ export default function App() {
         )}
       </AnimatePresence>
 
-      {/* Top Header Area */}
-      <div className={`absolute top-10 w-full z-50 flex justify-center pointer-events-none px-6 transition-all duration-700 ${state.level !== MapLevel.EXPLORATION && !state.isGenerating ? 'opacity-0 -translate-y-10' : 'opacity-100'}`}>
-        <AnimatePresence mode="wait">
-          <motion.div
-            key={state.isGenerating ? 'generating' : state.theme}
-            initial={{ opacity: 0, y: -20 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: 20 }}
-            className="flex items-center gap-3 px-4 py-2 rounded-full glass-panel shadow-sm border border-white/40"
-          >
-            <div className="px-2 py-0.5 rounded-full bg-black/5 text-[9px] tracking-[0.15em] font-light text-black/40 uppercase">
-              {state.isGenerating ? 'Tracing' : 'Exploration'}
-            </div>
-            <div className="w-px h-3 bg-black/10" />
-            <h1 className="text-[17px] font-medium text-black/80 tracking-tight">
-              {state.isGenerating ? '正在为你寻味...' : state.theme}
-            </h1>
-          </motion.div>
-        </AnimatePresence>
-      </div>
-
-      {/* Level 2 Metadata Header */}
-      <AnimatePresence>
-        {state.level === MapLevel.DEEP_DIVE && (
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.2 }}
-            className="absolute top-14 w-full z-40 text-center pointer-events-none"
-          >
-            <h1 className="text-[26px] font-medium text-black/80 tracking-tight">{state.centerDish.name}</h1>
-            <p className="text-[11px] font-light text-black/50 tracking-[0.2em] mt-1 uppercase">从这道菜继续展开</p>
-          </motion.div>
-        )}
+      {/* Unified Top Header Area */}
+      <AnimatePresence mode="wait">
+        <motion.div
+           key={state.level === MapLevel.EXPLORATION ? 'explore' : state.level === MapLevel.DEEP_DIVE ? 'deepdive' : 'pivot'}
+           initial={{ opacity: 0, y: -20 }}
+           animate={{ opacity: 1, y: 0 }}
+           exit={{ opacity: 0, y: -20 }}
+           transition={{ duration: 0.3 }}
+           className="absolute top-14 w-full z-40 text-center pointer-events-none"
+        >
+          <h1 className="text-[26px] font-medium text-black/80 tracking-tight">
+             {state.level === MapLevel.EXPLORATION 
+                ? '今日美食灵感' 
+                : state.level === MapLevel.DEEP_DIVE 
+                  ? state.centerDish.name 
+                  : state.focusedIngredient}
+          </h1>
+          <div className="relative inline-block mt-1 overflow-hidden rounded-full">
+            <p className="text-[11px] font-light text-black/50 tracking-[0.2em] relative z-10 px-3 py-0.5 uppercase block">
+              {state.isGenerating 
+                 ? '正在为你寻味...' 
+                 : state.level === MapLevel.EXPLORATION 
+                     ? '探索属于你的味道' 
+                     : state.level === MapLevel.DEEP_DIVE 
+                         ? '从这道菜继续展开'
+                         : '核心食材的美食谱系'}
+            </p>
+            {/* 流光效果 (Shimmer) */}
+            <div className="absolute inset-0 w-[200%] h-full bg-gradient-to-r from-transparent via-white/80 to-transparent animate-[shimmer_2s_infinite_linear] z-0 blur-[1px]" />
+          </div>
+        </motion.div>
       </AnimatePresence>
 
-      {/* Level 3 Metadata Header */}
-      <AnimatePresence>
-        {state.level === MapLevel.INGREDIENT_PIVOT && (
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.2 }}
-            className="absolute top-14 w-full z-40 text-center pointer-events-none"
-          >
-            <h1 className="text-[26px] font-medium text-black/80 tracking-tight">{state.focusedIngredient}</h1>
-            <p className="text-[11px] font-light text-black/50 tracking-[0.2em] mt-1 uppercase">核心食材的美食谱系</p>
-          </motion.div>
-        )}
-      </AnimatePresence>
       {state.level === MapLevel.EXPLORATION ? (
         <motion.div 
           className="relative w-full h-full flex items-center justify-center"
@@ -220,23 +203,20 @@ export default function App() {
           <AnimatePresence mode="wait">
             <motion.div
               layoutId={`food-${state.centerDish.id}`}
-              className="z-30 flex flex-col items-center gap-3 cursor-pointer group"
+              className="z-40 flex flex-col items-center gap-2 cursor-pointer group"
               onClick={() => handleNodeClick(state.centerDish)}
             >
-              <div className="w-28 h-28 rounded-full glass-panel flex items-center justify-center p-1.5 overflow-hidden ring-1 ring-white/60 shadow-xl group-hover:scale-105 transition-transform duration-500">
-                <div className="w-full h-full rounded-full overflow-hidden border border-white/20">
+              <div className="w-20 h-20 rounded-full glass-node p-1 shadow-md group-hover:bg-white/40 transition-all duration-300">
+                 <div className="w-full h-full rounded-full overflow-hidden ring-1 ring-black/5">
                   <img 
                     src={state.centerDish.imageUrl} 
                     alt={state.centerDish.name}
-                    className="w-full h-full object-cover scale-110"
+                    className="w-full h-full object-cover opacity-90 group-hover:opacity-100"
                     referrerPolicy="no-referrer"
                   />
-                </div>
+                 </div>
               </div>
-              <div className="text-center group-hover:opacity-100 transition-opacity">
-                <p className="text-[15px] font-semibold text-black/90 tracking-tight">{state.centerDish.name}</p>
-                <p className="text-[8px] font-light text-black/40 tracking-[0.2em] uppercase mt-0.5">CURRENT</p>
-              </div>
+              <span className="text-[12px] font-medium text-black/60 tracking-tight text-center max-w-[75px] truncate">{state.centerDish.name}</span>
             </motion.div>
           </AnimatePresence>
 
@@ -258,23 +238,23 @@ export default function App() {
                   <img src={neighbor.imageUrl} alt={neighbor.name} className="w-full h-full object-cover opacity-90 group-hover:opacity-100" referrerPolicy="no-referrer" />
                  </div>
               </div>
-              <span className="text-[12px] font-medium text-black/80 tracking-tight text-center max-w-[75px] truncate">{neighbor.name}</span>
+              <span className="text-[10px] font-bold text-black/40 tracking-tight text-center max-w-[60px] leading-tight px-1 group-hover:text-black/60">{neighbor.name}</span>
             </motion.div>
           ))}
         </motion.div>
       ) : state.level === MapLevel.DEEP_DIVE ? (
-        <div className="relative w-full h-full flex flex-col items-center pt-28 pb-32 px-6">
+        <div className="relative w-full h-full flex flex-col items-center pt-[150px] px-6 overflow-y-auto overflow-x-hidden pb-24 touch-pan-y">
           {/* Level 2 Deep Dive Layout */}
           
           {/* Ingredients (Left Side) */}
-          <div className="absolute left-3 top-[22.5%] flex flex-col items-center gap-6 z-30 w-[64px]">
+          <div className="absolute left-3 top-[160px] flex flex-col items-center gap-4 z-30 w-[72px]">
             <h4 className="text-[10px] font-bold text-black/40 tracking-[0.2em] uppercase mb-1">食材</h4>
-            <div className="flex flex-col gap-6 w-full items-center">
+            <div className="flex flex-col gap-5 w-full items-center">
               {state.centerDish.metadata?.ingredients?.slice(0, 4).map((ing, i) => (
                 <motion.div
                   key={ing}
-                  initial={{ opacity: 0, x: -15 }}
-                  animate={{ opacity: 1, x: 0 }}
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
                   transition={{ delay: 0.1 * i + 0.3 }}
                   className="flex flex-col items-center gap-1.5 cursor-pointer group"
                   onClick={() => handleIngredientClick(ing)}
@@ -291,14 +271,14 @@ export default function App() {
           </div>
 
           {/* Flavors (Right Side) */}
-          <div className="absolute right-3 top-[22.5%] flex flex-col items-center gap-6 z-30 w-[64px]">
+          <div className="absolute right-3 top-[160px] flex flex-col items-center gap-4 z-30 w-[72px]">
             <h4 className="text-[10px] font-bold text-black/40 tracking-[0.2em] uppercase mb-1">口味</h4>
-            <div className="flex flex-col gap-6 w-full items-center">
+            <div className="flex flex-col gap-5 w-full items-center">
               {state.centerDish.metadata?.flavors?.slice(0, 4).map((flv, i) => (
                 <motion.div
                   key={flv}
-                  initial={{ opacity: 0, x: 15 }}
-                  animate={{ opacity: 1, x: 0 }}
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
                   transition={{ delay: 0.1 * i + 0.3 }}
                   className="flex flex-col items-center gap-1.5"
                 >
@@ -316,9 +296,9 @@ export default function App() {
           {/* Center Main Dish Visual */}
           <motion.div
             layoutId={`food-${state.centerDish.id}`}
-            className="z-20 flex flex-col items-center justify-center flex-1 mt-[-20px] mb-8"
+            className="z-20 flex flex-col items-center shrink-0 mb-4"
           >
-            <div className="w-52 h-52 md:w-60 md:h-60 rounded-full bg-white/5 backdrop-blur-[60px] border border-white/10 shadow-[0_15px_40px_rgba(0,0,0,0.06)] flex items-center justify-center p-2 ring-1 ring-white/5">
+            <div className="w-[200px] h-[200px] rounded-full bg-white/5 backdrop-blur-[60px] border border-white/10 shadow-[0_15px_40px_rgba(0,0,0,0.06)] flex items-center justify-center p-2 ring-1 ring-white/5">
               <div className="w-full h-full rounded-full overflow-hidden border border-white/5 shadow-inner relative">
                 <img src={state.centerDish.imageUrl} className="w-full h-full object-cover scale-105" referrerPolicy="no-referrer" />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/5 to-transparent shadow-inner" />
@@ -326,59 +306,74 @@ export default function App() {
             </div>
           </motion.div>
 
-          {/* Bottom Area: Related & Scenes */}
-          <div className="w-full flex flex-col gap-6 z-30 mt-auto pb-4">
-            {/* Related Dishes Arched Array */}
-            <div className="relative h-32 w-full flex justify-center items-center">
-               <div className="absolute top-[-20px] w-full flex items-center gap-2 px-10">
-                <div className="h-[1px] flex-1 bg-black/[0.03]" />
-                <h4 className="text-[9px] font-bold text-black/30 tracking-[0.3em] uppercase">关联菜品</h4>
-                <div className="h-[1px] flex-1 bg-black/[0.03]" />
-              </div>
+          {/* Dish Meta Tags */}
+          <div className="flex gap-2 justify-center flex-wrap mb-4 z-30">
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.7 }}
+              className="px-3 py-2 glass-node rounded-full text-[9px] font-medium text-black/60 border-white/50 shadow-sm"
+            >
+              {state.centerDish.category}
+            </motion.div>
+            {state.centerDish.metadata?.scenes?.map((scene, i) => (
+              <motion.div
+                key={scene}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 0.8 + i * 0.1 }}
+                className="px-3 py-2 glass-node rounded-full text-[9px] font-medium text-black/60 border-white/50 shadow-sm"
+              >
+                {scene}
+              </motion.div>
+            ))}
+          </div>
 
-              {state.centerDish.metadata?.relatedDishes?.slice(0, 4).map((item, i) => {
-                // Arc positioning: -60 to 60 degrees around the bottom
-                const angle = ((i / 3) * 120 - 60) * (Math.PI / 180);
-                const rx = 140;
-                const ry = 40;
-                return (
+          {/* Bottom Area: Related & Merchants */}
+          <div className="w-full flex flex-col gap-6 z-30 mt-2 pb-4">
+            {/* Related Dishes Horizontal Array */}
+            <div className="relative w-full flex justify-between items-center px-4">
+              {state.centerDish.metadata?.relatedDishes?.slice(0, 4).map((item, i) => (
                   <motion.div 
                     key={item.name}
-                    initial={{ opacity: 0, scale: 0.8 }}
-                    animate={{ 
-                      opacity: 1, 
-                      scale: 1,
-                      x: Math.sin(angle) * rx,
-                      y: Math.cos(angle) * ry - 10
-                    }}
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
                     transition={{ delay: 0.5 + (i * 0.1) }}
-                    className="absolute flex flex-col items-center gap-1.5 w-16"
+                    className="flex flex-col items-center gap-1.5 w-[70px]"
                   >
                     <div className="w-14 h-14 rounded-2xl glass-node p-0.5 shadow-sm border-white/60 overflow-hidden group active:scale-95 transition-transform">
                       <img src={item.imageUrl} className="w-full h-full object-cover rounded-[14px]" referrerPolicy="no-referrer" />
                     </div>
-                    <span className="text-[8px] text-black/60 font-bold tracking-tight truncate w-full text-center px-0.5">{item.name}</span>
+                    <span className="text-[9px] text-black/60 font-bold tracking-tight truncate w-full text-center px-0.5">{item.name}</span>
                   </motion.div>
-                );
-              })}
+              ))}
             </div>
 
-            {/* Scenes */}
-            <div className="flex flex-col gap-2 pt-2">
-               <h4 className="text-[9px] font-bold text-black/20 tracking-[0.25em] uppercase text-center">适合场景</h4>
-              <div className="flex gap-2 justify-center">
-                {state.centerDish.metadata?.scenes?.map((scene, i) => (
-                  <motion.div
-                    key={scene}
-                    initial={{ opacity: 0, scale: 0.9 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    transition={{ delay: 0.7 + (i * 0.1) }}
-                    className="px-3 py-2 glass-node rounded-full text-[9px] font-medium text-black/60 border-white/50 shadow-sm"
-                  >
-                    {scene}
-                  </motion.div>
-                ))}
-              </div>
+            {/* Merchants */}
+            <div className="flex flex-col gap-3 pt-4 px-2 w-full">
+               <div className="flex justify-center items-center gap-2">
+                 <div className="h-px flex-1 bg-black/5" />
+                 <span className="text-[9px] font-bold text-black/20 tracking-[0.25em] uppercase">吃这道菜的去处</span>
+                 <div className="h-px flex-1 bg-black/5" />
+               </div>
+               
+               <div className="w-full flex justify-center">
+                 <div className="w-full max-w-[320px] bg-white/40 rounded-2xl p-3 shadow-sm border border-white/60 flex items-center gap-3 active:scale-95 transition-transform cursor-pointer">
+                   <div className="w-12 h-12 rounded-xl overflow-hidden shrink-0">
+                     <img src="https://images.unsplash.com/photo-1555396273-367ea4eb4db5?q=80&w=200&auto=format&fit=crop" alt="Merchant" className="w-full h-full object-cover" referrerPolicy="no-referrer" />
+                   </div>
+                   <div className="flex flex-col gap-1 flex-1">
+                     <div className="flex justify-between items-center">
+                       <span className="text-[12px] font-semibold text-black/80 tracking-tight">老字号特色风味馆</span>
+                       <span className="text-[10px] font-medium text-orange-500">4.8分</span>
+                     </div>
+                     <div className="flex justify-between items-center text-[9px] text-black/40 font-light">
+                       <span>月售 800+</span>
+                       <span>30分钟 · 1.2km</span>
+                     </div>
+                   </div>
+                 </div>
+               </div>
             </div>
           </div>
         </div>
@@ -410,8 +405,8 @@ export default function App() {
             transition={{ type: 'spring', damping: 20 }}
             className="z-30 flex flex-col items-center gap-4"
           >
-            <div className="w-24 h-24 rounded-full bg-orange-50/50 backdrop-blur-2xl border-2 border-orange-200/50 shadow-xl flex items-center justify-center p-4 ring-8 ring-orange-100/10">
-               <ChefHat className="w-10 h-10 text-orange-400/80" />
+            <div className="w-24 h-24 rounded-full glass-panel border border-white/40 shadow-xl flex items-center justify-center p-2 ring-8 ring-white/10 overflow-hidden">
+               <img src="https://images.unsplash.com/photo-1596040033229-a9821ebd058d?q=80&w=200&auto=format&fit=crop" className="w-full h-full rounded-full object-cover opacity-80" alt="Ingredient placeholder" referrerPolicy="no-referrer" />
             </div>
             <div className="text-center px-4 py-1.5 rounded-full bg-white/60 border border-white/80 shadow-sm">
                <span className="text-[15px] font-bold text-black/70 tracking-wide">{state.focusedIngredient}</span>

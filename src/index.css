@@ -6,6 +6,11 @@
   --color-glass-border: rgba(255, 255, 255, 0.2);
 }
 
+@keyframes shimmer {
+  0% { transform: translateX(-100%) skewX(-12deg); }
+  100% { transform: translateX(100%) skewX(-12deg); }
+}
+
 @layer base {
   body {
     @apply antialiased bg-[#F2F2F2] overflow-hidden flex items-center justify-center h-screen;
