@@ -165,10 +165,10 @@ export default function App() {
       <AnimatePresence mode="wait">
         <motion.div
            key={state.level === MapLevel.EXPLORATION ? 'explore' : state.level === MapLevel.DEEP_DIVE ? 'deepdive' : 'pivot'}
-           initial={{ opacity: 0, y: -20 }}
+           initial={{ opacity: 0, y: state.level === MapLevel.EXPLORATION ? -20 : 0 }}
            animate={{ opacity: 1, y: 0 }}
-           exit={{ opacity: 0, y: -20 }}
-           transition={{ duration: 0.3 }}
+           exit={{ opacity: 0, y: state.level === MapLevel.EXPLORATION ? -20 : 0 }}
+           transition={{ duration: state.level === MapLevel.EXPLORATION ? 0.3 : 0.4 }}
            className="absolute top-14 w-full z-40 text-center pointer-events-none"
         >
           <h1 className="text-[26px] font-medium text-black/80 tracking-tight">
@@ -216,7 +216,7 @@ export default function App() {
                   />
                  </div>
               </div>
-              <span className="text-[12px] font-medium text-black/60 tracking-tight text-center max-w-[75px] truncate">{state.centerDish.name}</span>
+              <span className="text-[12px] font-light text-black/60 tracking-tight text-center max-w-[75px] truncate">{state.centerDish.name}</span>
             </motion.div>
           </AnimatePresence>
 
@@ -238,7 +238,7 @@ export default function App() {
                   <img src={neighbor.imageUrl} alt={neighbor.name} className="w-full h-full object-cover opacity-90 group-hover:opacity-100" referrerPolicy="no-referrer" />
                  </div>
               </div>
-              <span className="text-[10px] font-bold text-black/40 tracking-tight text-center max-w-[60px] leading-tight px-1 group-hover:text-black/60">{neighbor.name}</span>
+              <span className="text-[12px] font-light text-black/60 tracking-tight text-center max-w-[75px] truncate px-1 group-hover:text-black/80">{neighbor.name}</span>
             </motion.div>
           ))}
         </motion.div>
@@ -248,14 +248,14 @@ export default function App() {
           
           {/* Ingredients (Left Side) */}
           <div className="absolute left-3 top-[160px] flex flex-col items-center gap-4 z-30 w-[72px]">
-            <h4 className="text-[10px] font-bold text-black/40 tracking-[0.2em] uppercase mb-1">食材</h4>
+            <h4 className="text-[14px] font-medium text-black/60 tracking-[0.1em] mb-1">食材</h4>
             <div className="flex flex-col gap-5 w-full items-center">
               {state.centerDish.metadata?.ingredients?.slice(0, 4).map((ing, i) => (
                 <motion.div
                   key={ing}
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
-                  transition={{ delay: 0.1 * i + 0.3 }}
+                  transition={{ duration: 0.4 }}
                   className="flex flex-col items-center gap-1.5 cursor-pointer group"
                   onClick={() => handleIngredientClick(ing)}
                 >
@@ -264,7 +264,7 @@ export default function App() {
                        <span className="text-[8px] text-black/70 font-semibold text-center px-1 leading-[1.1]">{ing}</span>
                      </div>
                   </div>
-                  <span className="text-[9px] text-black/50 font-light tracking-wide group-hover:text-black/80">{ing}</span>
+                  <span className="text-[12px] text-black/60 font-light tracking-wide group-hover:text-black/80">{ing}</span>
                 </motion.div>
               ))}
             </div>
@@ -272,14 +272,14 @@ export default function App() {
 
           {/* Flavors (Right Side) */}
           <div className="absolute right-3 top-[160px] flex flex-col items-center gap-4 z-30 w-[72px]">
-            <h4 className="text-[10px] font-bold text-black/40 tracking-[0.2em] uppercase mb-1">口味</h4>
+            <h4 className="text-[14px] font-medium text-black/60 tracking-[0.1em] mb-1">口味</h4>
             <div className="flex flex-col gap-5 w-full items-center">
               {state.centerDish.metadata?.flavors?.slice(0, 4).map((flv, i) => (
                 <motion.div
                   key={flv}
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
-                  transition={{ delay: 0.1 * i + 0.3 }}
+                  transition={{ duration: 0.4 }}
                   className="flex flex-col items-center gap-1.5"
                 >
                   <div className="w-10 h-10 rounded-full glass-node flex items-center justify-center p-1 shadow-sm border-white/60">
@@ -287,7 +287,7 @@ export default function App() {
                        <span className="text-[8px] text-black/70 font-semibold text-center px-1 leading-[1.1]">{flv}</span>
                      </div>
                   </div>
-                  <span className="text-[9px] text-black/50 font-light tracking-wide">{flv}</span>
+                  <span className="text-[12px] text-black/60 font-light tracking-wide">{flv}</span>
                 </motion.div>
               ))}
             </div>
@@ -311,8 +311,8 @@ export default function App() {
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
-              transition={{ delay: 0.7 }}
-              className="px-3 py-2 glass-node rounded-full text-[9px] font-medium text-black/60 border-white/50 shadow-sm"
+              transition={{ duration: 0.4 }}
+              className="px-3 py-2 glass-node rounded-full text-[11px] font-medium text-black/60 border-white/50 shadow-sm"
             >
               {state.centerDish.category}
             </motion.div>
@@ -321,8 +321,8 @@ export default function App() {
                 key={scene}
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
-                transition={{ delay: 0.8 + i * 0.1 }}
-                className="px-3 py-2 glass-node rounded-full text-[9px] font-medium text-black/60 border-white/50 shadow-sm"
+                transition={{ duration: 0.4 }}
+                className="px-3 py-2 glass-node rounded-full text-[11px] font-medium text-black/60 border-white/50 shadow-sm"
               >
                 {scene}
               </motion.div>
@@ -338,13 +338,13 @@ export default function App() {
                     key={item.name}
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
-                    transition={{ delay: 0.5 + (i * 0.1) }}
+                    transition={{ duration: 0.4 }}
                     className="flex flex-col items-center gap-1.5 w-[70px]"
                   >
                     <div className="w-14 h-14 rounded-2xl glass-node p-0.5 shadow-sm border-white/60 overflow-hidden group active:scale-95 transition-transform">
                       <img src={item.imageUrl} className="w-full h-full object-cover rounded-[14px]" referrerPolicy="no-referrer" />
                     </div>
-                    <span className="text-[9px] text-black/60 font-bold tracking-tight truncate w-full text-center px-0.5">{item.name}</span>
+                    <span className="text-[12px] text-black/60 font-light tracking-tight truncate w-full text-center px-0.5">{item.name}</span>
                   </motion.div>
               ))}
             </div>
@@ -358,21 +358,26 @@ export default function App() {
                </div>
                
                <div className="w-full flex justify-center">
-                 <div className="w-full max-w-[320px] bg-white/40 rounded-2xl p-3 shadow-sm border border-white/60 flex items-center gap-3 active:scale-95 transition-transform cursor-pointer">
+                 <motion.div 
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ duration: 0.4 }}
+                    className="w-full max-w-[320px] bg-white/40 rounded-2xl p-3 shadow-sm border border-white/60 flex items-center gap-3 active:scale-95 transition-transform cursor-pointer"
+                 >
                    <div className="w-12 h-12 rounded-xl overflow-hidden shrink-0">
                      <img src="https://images.unsplash.com/photo-1555396273-367ea4eb4db5?q=80&w=200&auto=format&fit=crop" alt="Merchant" className="w-full h-full object-cover" referrerPolicy="no-referrer" />
                    </div>
                    <div className="flex flex-col gap-1 flex-1">
                      <div className="flex justify-between items-center">
-                       <span className="text-[12px] font-semibold text-black/80 tracking-tight">老字号特色风味馆</span>
-                       <span className="text-[10px] font-medium text-orange-500">4.8分</span>
+                       <span className="text-[14px] font-semibold text-black/80 tracking-tight">老字号特色风味馆</span>
+                       <span className="text-[12px] font-medium text-orange-500">4.8分</span>
                      </div>
-                     <div className="flex justify-between items-center text-[9px] text-black/40 font-light">
+                     <div className="flex justify-between items-center text-[11px] text-black/60 font-light">
                        <span>月售 800+</span>
                        <span>30分钟 · 1.2km</span>
                      </div>
                    </div>
-                 </div>
+                 </motion.div>
                </div>
             </div>
           </div>
